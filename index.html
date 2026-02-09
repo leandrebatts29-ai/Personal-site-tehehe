@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to meh personal site :3</title>
+    <style>
+        /* Base Styling: Denim Blue Theme */
+        body {
+            background-color: #5f9ea0; /* Denim Blue default */
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        section { padding: 50px 20px; border-bottom: 2px solid rgba(255,255,255,0.2); }
+        .grey-section { background-color: #708090; } /* Example for separate color scales */
+        
+        /* Navigation (Slide 2) */
+        nav ul { list-style: none; display: flex; gap: 20px; justify-content: center; }
+        nav a { color: white; text-decoration: none; font-weight: bold; }
+
+        /* Gallery Layout (Slides 4 & 5) */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .gallery img { width: 100%; cursor: pointer; transition: 0.3s; }
+        .modal {
+            display: none; position: fixed; z-index: 1; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px); justify-content: center; align-items: center;
+        }
+        .modal img { max-width: 90%; max-height: 90%; }
+
+        /* Music Player (Slide 7) */
+        .music-player { text-align: center; margin-top: 20px; }
+        .controls i { font-size: 2rem; cursor: pointer; margin: 0 10px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>[Welcome to meh personal site :3]</h1>
+        <p>[Theres tons of fun stuffs here hehehehahahahahahahahahaaaaa-- y'all like Sonic? Also, I'm still in the middle of making this site, so if anything's broken, uhh sybau-]</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#art">Art Gallery</a></li>
+            <li><a href="#secrets">Cool Sonic Secrets</a></li>
+            <li><a href="https://leandrebatts29-ai.github.io/embedmaker/">Embedder</a></li>
+            <li><a href="#bee-script">Bee Movie Script</a></li>
+            <li><a href="#music">All Music</a></li>
+        </ul>
+    </nav>
+
+    <section id="art">
+        <h2>Art Gallery</h2>
+        <div class="gallery">
+            <img src="images/art1.jpg" onclick="openModal(this.src)" alt="Artwork">
+            </div>
+    </section>
+
+    <div id="imageModal" class="modal" onclick="this.style.display='none'">
+        <img id="modalImg">
+    </div>
+
+    <section id="secrets" class="grey-section">
+        <h2>Cool Sonic Secrets</h2>
+        <p>Hello, welcome to Sonic's cool secret area.</p>
+        <img src="images/sonic.jpg" style="width:50%; display:block; margin:auto;">
+        <p>Sonic 1  Sonic 2  Sonic CD  Sonic 3 & Knuckles</p>
+    </section>
+
+    <section id="music">
+        <div class="music-player">
+            <img src="images/cover-art.jpg" alt="Cover Art" width="200">
+            <div id="music-title">Music title (from metadata)</div>
+            <div class="controls">
+                <span>⏮️</span> <span onclick="togglePlay()">⏯️</span> <span>⏭️</span> </div>
+            <audio id="audio-player" src="music/track1.mp3"></audio>
+        </div>
+    </section>
+
+    <script>
+        function openModal(src) {
+            document.getElementById('modalImg').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function togglePlay() {
+            const player = document.getElementById('audio-player');
+            player.paused ? player.play() : player.pause();
+        }
+    </script>
+</body>
+</html>

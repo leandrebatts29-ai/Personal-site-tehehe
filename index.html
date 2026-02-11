@@ -155,9 +155,9 @@ myArtFiles.forEach(fileName => {
     <p>Click a game to view its cheats, unused content, and codes:</p>
     <ul>
         <li><a href="https://docs.google.com/document/d/1gYIrCF2ozAWJTTJUIRDK2NzpGdIExEm10DWlyCCAxHM/edit" target="_blank">Sonic 1</a> </li>
+        <li><a href="https://docs.google.com/document/d/1ZBVXvvQH0Qd1n8kPVCc7qtZi1tF34WGmbMhmWwF6LsY/edit" target="_blank">Sonic CD</a> </li>
         <li><a href="https://docs.google.com/document/d/1NVgU-YQIQgZewDBsGk3D4sO3jEpysu56GAu3NL2RqAI/edit" target="_blank">Sonic 2</a> </li>
         <li><a href="https://docs.google.com/document/d/16urfQfyPDYSYxBmmX0g1V-Vue-c63iocw356R9tQ6UU/edit" target="_blank">Sonic 3 & Knuckles</a> </li>
-        <li><a href="https://docs.google.com/document/d/1ZBVXvvQH0Qd1n8kPVCc7qtZi1tF34WGmbMhmWwF6LsY/edit" target="_blank">Sonic CD</a> </li>
     </ul>
 </section>
 
@@ -172,14 +172,38 @@ myArtFiles.forEach(fileName => {
             <button onclick="nextTrack()" style="padding: 12px 28px; background: #5f9ea0; border: none; color: white; border-radius: 12px; cursor: pointer; font-weight: bold; transition: all 0.3s;">Next ▶</button>
         </div>
         <p style="margin-top: 10px; font-size: 0.95em; opacity: 0.9;">Autoplay off; Press Play</p>
+    <div style="margin: 15px 0;">
+    <select id="trackSelector" onchange="changeTrack(this.value)" style="width: 100%; padding: 10px; border-radius: 8px; background: #444; color: white; border: 1px solid #5f9ea0; cursor: pointer;">
+        </select>
+</div>
+</section>
+
+<section id="music" class="grey-section">
+    <h2>Peak Tunes :3</h2>
+    <div class="music-player" style="text-align: center; margin: 20px auto; max-width: 700px; padding: 25px; background: rgba(0,0,0,0.5); border-radius: 16px; color: white; box-shadow: 0 0 20px rgba(95,158,160,0.6);">
+        
+        <h3 id="currentTrack" style="margin: 0 0 15px; font-size: 1.4em; font-weight: bold;">Loading...</h3>
+        
+        <div style="margin-bottom: 20px;">
+            <select id="trackSelector" onchange="changeTrack(this.value)" style="width: 100%; padding: 10px; border-radius: 8px; background: #333; color: white; border: 1px solid #5f9ea0; cursor: pointer; font-family: sans-serif;">
+                </select>
+        </div>
+
+        <audio id="audioPlayer" controls style="width: 100%; margin: 15px 0; filter: drop-shadow(0 0 8px #5f9ea0);"></audio>
+        
+        <div style="display: flex; justify-content: center; gap: 25px; margin: 20px 0;">
+            <button onclick="prevTrack()" style="padding: 12px 28px; background: #5f9ea0; border: none; color: white; border-radius: 12px; cursor: pointer; font-weight: bold; transition: all 0.3s;">◀ Prev</button>
+            <button onclick="togglePlay()" id="playPauseBtn" style="padding: 12px 32px; background: #708090; border: none; color: white; border-radius: 12px; cursor: pointer; font-weight: bold; transition: all 0.3s;">Play ▶</button>
+            <button onclick="nextTrack()" style="padding: 12px 28px; background: #5f9ea0; border: none; color: white; border-radius: 12px; cursor: pointer; font-weight: bold; transition: all 0.3s;">Next ▶</button>
+        </div>
+        <p style="margin-top: 10px; font-size: 0.95em; opacity: 0.9;">Autoplay off; Press Play</p>
     </div>
 </section>
 
 <script>
-// Base URL for your juicy Archive.org files
 const baseUrl = "https://archive.org/download/03.-clint-eastwood/";
 
-// Enhanced playlist with metadata (Artist - Title - Year)
+// Your existing playlist array (keep it exactly as you had it)
 const playlist = [
     { file: "01. 5 - 4.mp3", display: "Gorillaz - 5/4 - 2001" },
     { file: "02. Tomorrow Comes Today.mp3", display: "Gorillaz - Tomorrow Comes Today - 2001" },
@@ -298,21 +322,40 @@ const playlist = [
     { file: "125. Stranded Lullaby.mp3", display: "ミラクルミュージカル - Stranded Lullaby - 2012" },
     { file: "126. Dream Sweet In Sea Major.mp3", display: "終わりは、本当に終わりじゃないよね？ - Dream Sweet in Sea Major - 1212" },
     { file: "127. Hidden in the Sand.mp3", display: "Tally Hall - Hidden in the Sand - 2008" },
-    // Add more if needed, but this matches your 117
 ];
 
 let currentIndex = 0;
 const audio = document.getElementById("audioPlayer");
 const trackTitle = document.getElementById("currentTrack");
 const playPauseBtn = document.getElementById("playPauseBtn");
+const selector = document.getElementById("trackSelector");
+
+// Populate the dropdown menu automatically from the playlist array
+playlist.forEach((track, index) => {
+    let option = document.createElement("option");
+    option.value = index;
+    option.textContent = track.display;
+    selector.appendChild(option);
+});
 
 function loadTrack(index) {
     if (index < 0 || index >= playlist.length) return;
     const track = playlist[index];
     audio.src = baseUrl + encodeURIComponent(track.file);
     trackTitle.textContent = track.display;
+    
+    // SYNC: Update the dropdown position when song changes
+    selector.value = index; 
+    
     audio.load();
     audio.onended = () => nextTrack();
+}
+
+// Function for the dropdown to call
+function changeTrack(index) {
+    currentIndex = parseInt(index);
+    loadTrack(currentIndex);
+    playTrack();
 }
 
 function playTrack() {
@@ -345,10 +388,9 @@ function prevTrack() {
     playTrack();
 }
 
-// Kick off with the first track loaded
 loadTrack(currentIndex);
 </script>
-
+    
 </script>        
     <section id="bee-script">
     <h2>The Bee Movie Script</h2>

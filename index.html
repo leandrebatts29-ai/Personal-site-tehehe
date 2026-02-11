@@ -52,6 +52,7 @@
             <li><a href="#art">Art Gallery</a></li>
             <li><a href="#secrets">Cool Sonic Secrets</a></li>
             <li><a href="https://leandrebatts29-ai.github.io/embedmaker/">Embedder</a></li>
+            <li><a href="https://leandrebatts29-ai.github.io/embedmaker/">G*mes</a></li>
             <li><a href="#bee-script">Bee Movie Script</a></li>
             <li><a href="#music">All Music</a></li>
         </ul>
@@ -144,6 +145,73 @@ myArtFiles.forEach(fileName => {
 
     grid.appendChild(img);
 });
+
+<style>
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    .game-card {
+        background: #333;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .game-card:hover { transform: scale(1.05); background: #444; }
+    
+    /* The Fullscreen Emulator Overlay */
+    #emu-layer {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: black;
+        z-index: 1000;
+    }
+    .close-btn {
+        position: absolute; top: 10px; right: 10px;
+        color: white; font-size: 30px; cursor: pointer; z-index: 1001;
+    }
+</style>
+
+<div class="game-grid">
+    <div class="game-card" onclick="launch('segaMD', 'Sonic 1', 'https://archive.org/download/roms-for-the-site/Sonic%20The%20Hedgehog%20%28USA%2C%20Europe%29.md')">
+        <div class="title">Sonic The Hedgehog</div>
+    </div>
+    </div>
+
+<div id="emu-layer">
+    <span class="close-btn" onclick="terminate()">×</span>
+    <div id="game" style="width:100%; height:100%;"></div>
+</div>
+
+<script>
+    function launch(core, title, url) {
+        document.getElementById('emu-layer').style.display = 'block';
+        
+        window.EJS_player = '#game';
+        window.EJS_core = core;
+        window.EJS_gameName = title;
+        window.EJS_gameUrl = url;
+        window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+
+        let script = document.createElement('script');
+        script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
+        document.getElementById('game').appendChild(script);
+    }
+
+    function terminate() {
+        document.getElementById('emu-layer').style.display = 'none';
+        document.getElementById('game').innerHTML = '';
+        // This effectively "kills" the process and the sound
+        location.reload(); 
+    }
+</script>
+
 </script>
     
     <div id="imageModal" class="modal" onclick="this.style.display='none'">

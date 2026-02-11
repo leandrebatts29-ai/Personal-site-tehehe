@@ -441,6 +441,40 @@ function prevTrack() {
 
 loadTrack(currentIndex);
 </script>
+
+    <div id="sonic-section">
+    <h2>G*mes tee hee</h2>
+    <p>Click a g*me to play:</p>
+    <ul>
+        <li><a href="javascript:void(0)" class="sonic-link" onclick="launchGame('segaMD', 'Sonic 1', 'https://archive.org/download/roms-for-the-site/Sonic%20The%20Hedgehog%20%28USA%2C%20Europe%29.md')">Sonic 1</a></li>
+        </ul>
+</div>
+
+    function launchGame(core, name, url) {
+    document.getElementById('sonic-player-container').style.display = 'block';
+    
+    window.EJS_player = '#emulator-target';
+    window.EJS_core = core;
+    window.EJS_gameName = name;
+    window.EJS_gameUrl = url;
+    
+    // This points to the folder you just fixed with Git!
+    window.EJS_pathtodata = "data/"; 
+
+    let script = document.createElement('script');
+    script.src = "data/loader.js"; 
+    document.getElementById('emulator-target').appendChild(script);
+}
+
+function closeGame() {
+    // Reloads the area to stop game music and clean up memory
+    location.reload(); 
+}
+
+<div id="sonic-player-container">
+    <button class="emu-close-btn" onclick="closeGame()">Close ×</button>
+    <div id="emulator-target" style="width:100%; height:500px; border-radius: 10px; overflow: hidden;"></div>
+</div>
     
 </script>        
     <section id="bee-script">
@@ -551,6 +585,38 @@ According to all known laws of aviation, there is no way that a bee should be ab
         grid.appendChild(img);
     });
 </script>
+
+
+ /* The main box, styled like your 'Peak Tunes' player */
+#sonic-player-container {
+    background-color: #3d4c53; /* Match your music player's grey */
+    border: 2px solid #7899a1; /* Match the teal from your 'Prev/Next' buttons */
+    border-radius: 15px;
+    padding: 15px;
+    width: 95%;
+    max-width: 850px;
+    margin: 20px auto;
+    display: none; /* Hidden until you click a game link */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+/* Styled Close button to match your music player's buttons */
+.emu-close-btn {
+    background-color: #7899a1;
+    color: #1a1a1a;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
+    margin-bottom: 10px;
+}
+
+.emu-close-btn:hover {
+    background-color: #92b5bd;
+}
+
 
 </body>
 </html>

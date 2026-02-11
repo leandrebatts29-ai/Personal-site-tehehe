@@ -82,7 +82,7 @@ const myArtFiles = [
     "HAZELMARI.png",
     "S33K.png",
     "T3MPRR.png",
-    "VERTICAL.png"
+    "VERTICAL.png",
     "Page 52.png",
     "Page 53.png",
     "Page 54.png",
@@ -385,110 +385,6 @@ According to all known laws of aviation, there is no way that a bee should be ab
         </pre>
     </div>
 </section>
-    
-<style>
-    /* Add this to your <style> section at the top */
-    .script-container {
-        background-color: rgba(0, 0, 0, 0.3); /* Darker denim overlay */
-        padding: 20px;
-        border-radius: 10px;
-        max-height: 500px; /* Limits the height */
-        overflow-y: scroll; /* Adds a scrollbar */
-        font-family: 'Courier New', Courier, monospace;
-        line-height: 1.6;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    pre {
-        white-space: pre-wrap; /* Ensures text wraps instead of going off-screen */
-        word-wrap: break-word;
-        margin: 0;
-    }
-</style>
-    
-</section>
-
-<script>
-    // 1. LIST YOUR FILE NAMES HERE
-    // Just add the exact name of each file you put in your "images" folder.
-    const myArtFiles = [
-    "3.png",
-    "1999.png",
-    "CANNIBAL.png",
-    "DINNER!.png",
-    "F3M.png",
-    "GONE.png",
-    "HAZELMARI.png",
-    "S33K.png",
-    "T3MPRR.png",
-    "VERTICAL.png"
-    "Page 52.png",
-    "Page 53.png",
-    "Page 54.png",
-    "Page 55.png",
-    "Page 56.png",
-    "Page 57 (1).png",
-    "Page 58 (1).png",
-    "Page 59.png",
-    "Page 60.png",
-    "Page 61.png",
-    "Page 62.png",
-    "2026_01_30_0gx_Kleki.png",
-    "canvas.png",
-    "Eh.png",
-    "FINALLYYY.gif",
-    "Greg test 1.png",
-    "HazelChill.png",
-    "Hazelio.png",
-    "HazelLes.png",
-    "Hazelskadadle.gif",
-    "The Black Rainbows.png",
-    "The Ocean Man.png",
-    "Drying Eyes.png",
-    "firsties.gif",
-    "Hatsune Stiku.png",
-    "IMG_20250819_14076.jpg",
-    "IMG_20251017_140647.jpg",
-    "IMG_20251020_143339.jpg",
-    "Keki.png",
-    "PMS333lands.png",
-    "Static.png",
-    "Stick-anatomy.png",
-    "StickNudity.png",
-    ];
-
-    const grid = document.getElementById('image-grid');
-
-    // 2. AUTOMATICALLY GENERATE THE GALLERY
-    myArtFiles.forEach(fileName => {
-        const img = document.createElement('img');
-        
-        // This creates the link to your "images" folder + the filename
-        img.src = `images/${fileName}`; 
-        img.alt = fileName;
-        
-        // Hides the image if there's a typo in the name
-        img.onerror = function() { 
-            console.error("Could not find file: " + fileName);
-            this.style.display = 'none'; 
-        };
-
-        // Zoom-in effect when clicked
-        img.onclick = function() {
-            document.getElementById('modalImg').src = this.src;
-            document.getElementById('imageModal').style.display = 'flex';
-        };
-
-        grid.appendChild(img);
-    });
-</script>
-
-
-
-.emu-close-btn:hover {
-    background-color: #92b5bd;
-}
-
 
 </body>
 </html>

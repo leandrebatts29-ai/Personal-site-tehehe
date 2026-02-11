@@ -162,21 +162,183 @@ myArtFiles.forEach(fileName => {
 </section>
 
 <section id="music" class="grey-section">
-    <h2>Peak Tunes</h2>
-    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-<iframe
-    src="https://docs.google.com/presentation/d/11swhSIgy--uZJUQ0-fbQ1WniVGSQGFAkosIcdXdbiOk/embed?start=false&loop=false&delayms=3000"
-    frameborder="0"
-    width="100%"
-    height="100%"
-    style="position: absolute; top: 0; left: 0;"
-    allowfullscreen="true"
-    mozallowfullscreen="true"
-    webkitallowfullscreen="true"
-    allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; clipboard-write;"
-    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation-by-user-activation">
-</iframe>
-        
+    <h2>Peak Tunes :3</h2>
+    <div class="music-player" style="text-align: center; margin: 20px auto; max-width: 600px; padding: 20px; background: rgba(0,0,0,0.4); border-radius: 12px; color: white;">
+        <h3 id="currentTrack">Loading...</h3>
+        <audio id="audioPlayer" controls style="width: 100%; margin: 15px 0;"></audio>
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px;">
+            <button onclick="prevTrack()" style="padding: 10px 20px; background: #5f9ea0; border: none; color: white; border-radius: 8px; cursor: pointer;">◀ Prev</button>
+            <button onclick="togglePlay()" id="playPauseBtn" style="padding: 10px 20px; background: #708090; border: none; color: white; border-radius: 8px; cursor: pointer;">Play ▶</button>
+            <button onclick="nextTrack()" style="padding: 10px 20px; background: #5f9ea0; border: none; color: white; border-radius: 8px; cursor: pointer;">Next ▶</button>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9em;">Autoplay off by default – click Play to activate</p>
+    </div>
+</section>
+
+<script>
+// Full playlist – base URL + filenames in order
+const baseUrl = "https://archive.org/download/03.-clint-eastwood/";
+const playlist = [
+    "01. 5 - 4.mp3",
+    "02. Tomorrow Comes Today.mp3",
+    "03. Clint Eastwood.mp3",
+    "04. Rock The House.mp3",
+    "05. 19 - 2000.mp3",
+    "06. 19 - 2000 [Soulchild Remix].mp3",
+    "07. Left Hand Suzuki Method.mp3",
+    "08. 12D3.mp3",
+    "09. Rockit.mp3",
+    "10. Intro.mp3",
+    "11. Kids With Guns.mp3",
+    "12. O Green World.mp3",
+    "13. Dirty Harry.mp3",
+    "14. Dare.mp3",
+    "15. Feel Good Inc..mp3",
+    "16. El Mañana.mp3",
+    "17. People.mp3",
+    "18. Stylo.mp3",
+    "19. On Melancholy Hill.mp3",
+    "20. Broken.mp3",
+    "21. Empire Ants.mp3",
+    "22. Rhinestone Eyes.mp3",
+    "23. To Binge.mp3",
+    "24. Plastic Beach.mp3",
+    "25. Seattle Yodel.mp3",
+    "26. Saturnz Barz.mp3",
+    "27. Humility.mp3",
+    "28. Tranz.mp3",
+    "29. Strange Timez.mp3",
+    "30. Pac Man.mp3",
+    "31. Aries.mp3",
+    "32. The Lost Chord.mp3",
+    "33. Cracker Island.mp3",
+    "34. The Happy Dictator ft. Sparks.mp3",
+    "35. The God Of Lying feat. IDLES.mp3",
+    "36. Comedy.mp3",
+    "37. How the World Works.mp3",
+    "38. Unpaid Intern.mp3",
+    "39. Bezos I.mp3",
+    "40. Sexting.mp3",
+    "41. Look Who's Inside Again.mp3",
+    "42. Shit.mp3",
+    "43. All Eyes On Me.mp3",
+    "44. Welcome to The Internet.mp3",
+    "45. I'm Dancing In The Show Tonight.mp3",
+    "46. The Mollusk.mp3",
+    "47. Polka Dot Tail.mp3",
+    "48. The Blarney Stone.mp3",
+    "49. Ocean Man.mp3",
+    "50. Confessions of a Rotten Girl.mp3",
+    "51. M@GICAL☆CURE! LOVE SHOT! (feat. Hatsune Miku).mp3",
+    "52. Miku.mp3",
+    "53. Static.mp3",
+    "54. テト31世 (Teto the 31st).mp3",
+    "55. み む かゥ わ ナ イ ス ト ラ イ (Mimukauwa Nice Try).mp3",
+    "56. 匿名M (Anonymous M).mp3",
+    "57. メズマライザー (Mesmerizer).mp3",
+    "58. GIRL HELL 1999.mp3",
+    "59. PUSH UR T3MPRR.mp3",
+    "60. LOVESICK, CANNIBAL.mp3",
+    "61. ACT RIGHT.mp3",
+    "62. DINNER!.mp3",
+    "63. P3T.mp3",
+    "64. DOGMATICA.mp3",
+    "65. AND I'M GONE.mp3",
+    "66. ATTACKING VERTICAL.mp3",
+    "67. S33K H3LP.mp3",
+    "68. WEIGHTLESS!.mp3",
+    "69. MURDER EVERY 1 U KNOW! (feat. takihasdied).mp3",
+    "70. KATAMARI.mp3",
+    "71. Hyakugojyuuichi 2003.mp3",
+    "72. Dinosaurchestra Part One.mp3",
+    "73. Fine.mp3",
+    "74. Lawnmower.mp3",
+    "75. Vow of Silence.mp3",
+    "76. Eyewishes.mp3",
+    "77. Bystanding.mp3",
+    "78. Indie Cindy & The Lo-Fi Lullabies.mp3",
+    "79. Deep In The Ocean.mp3",
+    "80. Amnesia Was Her Name.mp3",
+    "81. Marketland.mp3",
+    "82. Knife Fight.mp3",
+    "83. Modify.mp3",
+    "84. Prelude to Presents.mp3",
+    "85. Christmas Will Be Soon.mp3",
+    "86. Aurora Borealis.mp3",
+    "87. SAD.mp3",
+    "88. CryptoSanta.mp3",
+    "89. Really Cool Wig.mp3",
+    "90. Two Trucks.mp3",
+    "91. Jaws.mp3",
+    "92. Lifetime Achievement Award.mp3",
+    "93. Touch-Tone Telephone.mp3",
+    "94. Cabinet Man.mp3",
+    "95. Welcome to Tally Hall.mp3",
+    "96. Taken For A Ride.mp3",
+    "97. The Bidding.mp3",
+    "98. Banana Man.mp3",
+    "99. The Whole World and You.mp3",
+    "100. &.mp3",
+    "101. Hymn for a Scarecrow.mp3",
+    "102. Turn the Lights Off.mp3",
+    "113. 13.mp3",
+    "114. Ruler of Everything.mp3",
+    "115. Variations on a Cloud.mp3",
+    "116. Introduction to the Snow.mp3",
+    "117. Isle Unto Thyself.mp3"
+];
+
+let currentIndex = 0;
+const audio = document.getElementById("audioPlayer");
+const trackTitle = document.getElementById("currentTrack");
+const playPauseBtn = document.getElementById("playPauseBtn");
+
+function loadTrack(index) {
+    if (index < 0 || index >= playlist.length) return;
+    const file = playlist[index];
+    audio.src = baseUrl + encodeURIComponent(file);  // encode for special chars like spaces & Japanese
+    trackTitle.textContent = `${index + 1}. ${file.replace('.mp3', '')}`;
+    audio.load();
+    // Optional: auto-play next when current ends
+    audio.onended = () => nextTrack();
+}
+
+function playTrack() {
+    audio.play().catch(e => console.log("Autoplay blocked, click play"));
+    playPauseBtn.textContent = "Pause ⏸";
+}
+
+function pauseTrack() {
+    audio.pause();
+    playPauseBtn.textContent = "Play ▶";
+}
+
+function togglePlay() {
+    if (audio.paused) {
+        playTrack();
+    } else {
+        pauseTrack();
+    }
+}
+
+function nextTrack() {
+    currentIndex = (currentIndex + 1) % playlist.length;
+    loadTrack(currentIndex);
+    playTrack();
+}
+
+function prevTrack() {
+    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+    loadTrack(currentIndex);
+    playTrack();
+}
+
+// Init first track
+loadTrack(currentIndex);
+
+// Optional: start on page load? Uncomment if you're feeling extra horny
+// playTrack();
+</script>        
     <section id="bee-script">
     <h2>The Bee Movie Script</h2>
     <div class="script-container">

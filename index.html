@@ -111,8 +111,6 @@ const myArtFiles = [
     "Page 61.png",
     "Page 62.png",
     "S33K.png",
-    "Stick-anatomy.png",
-    "StickNudity.png",
     "T3MPRR.png",
     "The Black Rainbows.png",
     "The Ocean Man.png",
@@ -154,7 +152,7 @@ myArtFiles.forEach(fileName => {
     
 <section id="secrets" class="grey-section">
     <h2>Sonic's Cool Secret Area</h2>
-    <p>Click a game to view its cheats, unused content, and codes:</p>
+    <p>Click a g*me to view its cheats, unused content, and codes:</p>
     <ul>
         <li><a href="https://docs.google.com/document/d/1gYIrCF2ozAWJTTJUIRDK2NzpGdIExEm10DWlyCCAxHM/edit" target="_blank">Sonic 1</a> </li>
         <li><a href="https://docs.google.com/document/d/1ZBVXvvQH0Qd1n8kPVCc7qtZi1tF34WGmbMhmWwF6LsY/edit" target="_blank">Sonic CD</a> </li>
@@ -374,41 +372,6 @@ function prevTrack() {
 }
 
 loadTrack(currentIndex);
-</script>
-
-    <div id="sonic-section">
-    <h2>G*mes tee hee</h2>
-    <p>Click a g*me to play:</p>
-    <ul>
-        <li><a href="javascript:void(0)" class="sonic-link" onclick="launchGame('segaMD', 'Sonic 1', 'https://archive.org/download/roms-for-the-site/Sonic%20The%20Hedgehog%20%28USA%2C%20Europe%29.md')">Sonic 1</a></li>
-        </ul>
-</div>
-
-    function launchGame(core, name, url) {
-    document.getElementById('sonic-player-container').style.display = 'block';
-    
-    window.EJS_player = '#emulator-target';
-    window.EJS_core = core;
-    window.EJS_gameName = name;
-    window.EJS_gameUrl = url;
-    
-    // This points to the folder you just fixed with Git!
-    window.EJS_pathtodata = "data/"; 
-
-    let script = document.createElement('script');
-    script.src = "data/loader.js"; 
-    document.getElementById('emulator-target').appendChild(script);
-}
-
-function closeGame() {
-    // Reloads the area to stop game music and clean up memory
-    location.reload(); 
-}
-
-<div id="sonic-player-container">
-    <button class="emu-close-btn" onclick="closeGame()">Close ×</button>
-    <div id="emulator-target" style="width:100%; height:500px; border-radius: 10px; overflow: hidden;"></div>
-</div>
     
 </script>        
     <section id="bee-script">
@@ -422,6 +385,84 @@ According to all known laws of aviation, there is no way that a bee should be ab
     </div>
 </section>
 
+<style>
+    /* Container styled like your music player card */
+    #sonic-emu-card {
+        background-color: #3d4c53; /* Match your music player's slate grey */
+        border-radius: 15px;
+        border: 2px solid #7899a1; /* Match the teal from your buttons */
+        padding: 20px;
+        width: 90%;
+        max-width: 800px;
+        margin: 20px auto;
+        display: none; /* Hidden until a game is clicked */
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        text-align: center;
+    }
+
+    /* Teal buttons to match your "Prev/Next" style */
+    .sonic-btn {
+        background-color: #7899a1;
+        color: #1a1a1a;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin: 5px;
+        font-family: sans-serif;
+    }
+
+    .sonic-btn:hover {
+        background-color: #92b5bd;
+    }
+
+    #game-frame {
+        width: 100%;
+        height: 450px;
+        background: #000;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+</style>
+
+<div id="sonic-section" style="padding: 20px; color: white;">
+    <h2>Sonic's Cool Secret Area</h2>
+    <p>Click a game to play:</p>
+    <div id="game-links">
+        <button class="sonic-btn" onclick="startSonic('segaMD', 'Sonic 1', 'https://archive.org/download/roms-for-the-site/Sonic%20The%20Hedgehog%20%28USA%2C%20Europe%29.md')">Sonic the Hedgehog</button>
+        <button class="sonic-btn" onclick="startSonic('segaMD', 'Sonic 2', 'https://archive.org/download/roms-for-the-site/Sonic%20The%20Hedgehog%202%20%28World%29%20%28Rev%20B%29%20%28Sonic%20Compilation%20~%20Sonic%20Classics%29.md')">Sonic the Hedgehog 2</button>
+    </div>
+</div>
+
+<div id="sonic-emu-card">
+    <button class="sonic-btn" style="float: right; margin-bottom: 10px;" onclick="location.reload()">Close ×</button>
+    <div id="game-frame"></div>
+</div>
+
+<script>
+    function startSonic(core, name, url) {
+        // Show the emulator card
+        document.getElementById('sonic-emu-card').style.display = 'block';
+        
+        // EmulatorJS Configuration
+        window.EJS_player = '#game-frame';
+        window.EJS_core = core;
+        window.EJS_gameName = name;
+        window.EJS_gameUrl = url;
+        
+        // This points to the folder you are uploading to GitHub
+        window.EJS_pathtodata = "data/"; 
+
+        // Load the loader script from your local data folder
+        let script = document.createElement('script');
+        script.src = "data/loader.js"; 
+        document.getElementById('game-frame').appendChild(script);
+    }
+</script>
+    
 <style>
     /* Add this to your <style> section at the top */
     .script-container {
@@ -486,8 +527,6 @@ According to all known laws of aviation, there is no way that a bee should be ab
         "Page 61.png"
         "Page 62.png"
         "S33K.png"
-        "Stick-anatomy.png"
-        "StickNudity.png"
         "T3MPRR.png"
         "The Black Rainbows.png"
         "The Ocean Man.png"
@@ -521,31 +560,6 @@ According to all known laws of aviation, there is no way that a bee should be ab
 </script>
 
 
- /* The main box, styled like your 'Peak Tunes' player */
-#sonic-player-container {
-    background-color: #3d4c53; /* Match your music player's grey */
-    border: 2px solid #7899a1; /* Match the teal from your 'Prev/Next' buttons */
-    border-radius: 15px;
-    padding: 15px;
-    width: 95%;
-    max-width: 850px;
-    margin: 20px auto;
-    display: none; /* Hidden until you click a game link */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-}
-
-/* Styled Close button to match your music player's buttons */
-.emu-close-btn {
-    background-color: #7899a1;
-    color: #1a1a1a;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    float: right;
-    margin-bottom: 10px;
-}
 
 .emu-close-btn:hover {
     background-color: #92b5bd;
